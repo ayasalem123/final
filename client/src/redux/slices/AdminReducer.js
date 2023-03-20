@@ -65,13 +65,13 @@ const userStored = localStorage.getItem('userInfos')
   : null;
 export const changetreatment = createAsyncThunk(
   'user/changetreatment',
-  async (formData, { rejectWithValue, getState, dispatch }) => {
+  async ({ newel }, { rejectWithValue, getState, dispatch }) => {
     try {
-      console.log(formData);
-      const id = userStored?.signeduser?._id;
+      console.log(newel);
+      const id = newel._id;
       const { data } = await axios.put(
         `http://localhost:5000/changetreatment/${id}`,
-        formData
+        newel
       );
       return data;
     } catch (error) {
@@ -81,11 +81,11 @@ export const changetreatment = createAsyncThunk(
 );
 export const addtreatment = createAsyncThunk(
   'user/addtreatment',
-  async (formData, { rejectWithValue, getState, dispatch }) => {
+  async ({ newel }, { rejectWithValue, getState, dispatch }) => {
     try {
       const { data } = await axios.post(
         `http://localhost:5000/addtreatment`,
-        formData
+        newel
       );
       return data;
     } catch (error) {

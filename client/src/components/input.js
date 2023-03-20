@@ -1,45 +1,25 @@
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import React, { useState } from 'react';
+import FileBase from 'react-file-base64';
 import axios from 'axios';
 import { changetreatment, addtreatment } from '../redux/slices/AdminReducer';
 import { useDispatch } from 'react-redux';
 function EditTreatment({ el }) {
   const [newel, setNewel] = useState(el);
-  const [formData, setFormData] = useState(new FormData());
   const dispatch = useDispatch();
   const handleChange = (event) => {
     console.log(event.target.title);
     console.log(newel);
     setNewel({ ...newel, [event.target.title]: event.target.value });
   };
-  const handleclick = (formData) => {
-    console.log(formData);
-    if (newel.id) {
-      dispatch(changetreatment(formData));
+  const handleclick = (newel) => {
+    if (newel._id) {
+      dispatch(changetreatment({ newel }));
     } else {
-      dispatch(addtreatment(formData));
-      //window.location.reload();
+      dispatch(addtreatment({ newel }));
+      window.location.reload();
     }
-  };
-
-  const [imageSrc, setImageSrc] = useState(null);
-  const [res, setRes] = useState('');
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      console.log(e.target.result);
-      setImageSrc(e.target.result);
-    };
-    reader.readAsDataURL(file);
-    formData.append('image', file);
-    formData.append('id', newel._id);
-    formData.append('title', newel.title);
-    formData.append('body', newel.body);
-    formData.append('img', newel.img);
-    formData.append('ved', newel.ved);
-    console.log(newel);
   };
   return (
     <>
@@ -87,12 +67,18 @@ function EditTreatment({ el }) {
       </InputGroup>
 
       <h2>Upload an Image</h2>
-      <input type="file" onChange={handleFileChange} accept="image/*" />
-      {imageSrc && <img src={imageSrc} alt="Uploaded Image" />}
+      <FileBase
+        multiple={false}
+        type="file"
+        onDone={({ base64 }) => {
+          setNewel({ ...newel, DesktopImg: base64 });
+        }}
+      />
+
       <button
         onClick={(event) => {
           event.preventDefault();
-          handleclick(formData);
+          handleclick(newel);
         }}
       >
         submit

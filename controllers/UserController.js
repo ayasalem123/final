@@ -37,8 +37,8 @@ const register = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     } else {
-      const { email, password,name, image } = req.body;
-      console.log({ email, password,name, image });
+      const { email, password, name, image } = req.body;
+      console.log({ email, password, name, image });
       const saltRounds = 10;
       const hashedpass = await bcrypt.hash(password, saltRounds);
       if (image != undefined) {
@@ -166,9 +166,9 @@ const getreviews = async (req, res) => {
 };
 const getuser = async (req, res) => {
   try {
-    const {id}=req.body
+    const { id } = req.body;
     const user = await AuthUser.findById(id);
-    res.send({profile:user.profile,name:user.name});
+    res.send({ profile: user.profile, name: user.name });
   } catch (error) {
     res.json(error);
   }

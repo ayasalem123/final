@@ -2,6 +2,12 @@ const appointment = require('../models/appointment');
 const user = require('../models/user');
 const Image = require('../models/image');
 const treatment = require('../models/treatmentSchema');
+const cloudinary = require('cloudinary');
+cloudinary.config({
+  cloud_name: process.env.Cloud_name,
+  api_key: process.env.Api_key,
+  api_secret: process.env.Api_secret,
+});
 const getdates = async (req, res) => {
   try {
     const appointments = await appointment.find();
@@ -117,29 +123,43 @@ const getimage = async (req, res) => {
 };
 const changetreatment = async (req, res) => {
   try {
-    const treatmentId = req?.body.id;
+    const treatmentId = req?.params?.id;
     const newtreatment = {
       title: req?.body.title,
       body: req?.body?.body,
       img: req?.body.img,
       ved: req?.body?.ved,
+      DesktopImg: req?.body?.DesktopImg,
     };
     if (treatmentId) {
-      //Create new image document
-      const newimage = new Image({
-        name: req.file.originalname,
-        data: req.file.buffer,
-        contentType: req.file.mimetype,
-      });
-      const finalres = await newimage.save();
-      console.log('hi');
-      console.log(treatmentId);
-      const changedtreatment = await treatment.findByIdAndUpdate(
-        userId,
-        { ...newtreatment, DesktopImg: finalres._id },
-        { new: true }
-      );
-      res.send(changedtreatment);
+      if (newtreatment.DesktopImg) {
+        const DesktopImg = await cloudinary.uploader.upload(
+          newtreatment.DesktopImg,
+          {
+            folder: 'images',
+            resource_type: 'auto',
+          }
+        );
+        const changedtreatment = await treatment.findByIdAndUpdate(
+          treatmentId,
+          {
+            ...newtreatment,
+            DesktopImg: DesktopImg?.secure_url,
+          },
+          { new: true }
+        );
+        console.log(changedtreatment);
+        res.send(changedtreatment);
+      } else {
+        const changedtreatment = await treatment.findByIdAndUpdate(
+          treatmentId,
+          {
+            ...newtreatment,
+          },
+          { new: true }
+        );
+        res.send(changedtreatment);
+      }
     }
   } catch (error) {
     res.send(error.message);
@@ -161,23 +181,29 @@ const addtreatment = async (req, res) => {
       body: req?.body?.body,
       img: req?.body?.img,
       ved: req?.body?.ved,
+      DesktopImg: req?.body?.DesktopImg,
     };
-
-    const newimage = new Image({
-      name: req.file.originalname,
-      data: req.file.buffer,
-      contentType: req.file.mimetype,
-    });
-    const finalres = await newimage.save();
-    console.log({
-      ...newtreatment,
-      DesktopImg: finalres._id,
-    });
-    const addedtreatment = await treatment.create({
-      ...newtreatment,
-      DesktopImg: finalres._id,
-    });
-    res.send(addedtreatment);
+    if (newtreatment.DesktopImg) {
+      const DesktopImg = await cloudinary.uploader.upload(
+        newtreatment.DesktopImg,
+        {
+          folder: 'images',
+          resource_type: 'auto',
+        }
+      );
+      const addedtreatment = await treatment.create({
+        ...newtreatment,
+        DesktopImg: DesktopImg?.secure_url,
+      });
+      console.log(addedtreatment);
+      res.send(addedtreatment);
+    } else {
+      const addedtreatment = await treatment.create({
+        ...newtreatment,
+      });
+      console.log(addedtreatment);
+      res.send(addedtreatment);
+    }
   } catch (error) {
     res.send(error.message);
   }

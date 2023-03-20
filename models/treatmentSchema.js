@@ -10,8 +10,7 @@ const treatmentSchema = mongoose.Schema({
   img: String,
   ved: String,
   DesktopImg: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'image',
+    type: String,
   },
 });
 module.exports = mongoose.model('treatment', treatmentSchema);
