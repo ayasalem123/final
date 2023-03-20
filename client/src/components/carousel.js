@@ -2,6 +2,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 function Carouselcomponent({ carouselelement }) {
+  console.log(carouselelement[0].img);
   return (
     <Carousel>
       <Carousel.Item>
