@@ -81,7 +81,7 @@ function Calender() {
   }
   return (
     <Page className="md-calendar-booking">
-      <Navbarbook/>
+      <Navbarbook />
       <div className="mbsc-form-group">
         <div className="mbsc-form-group-title">Select date & time</div>
         <Datepicker
@@ -135,4 +135,4 @@ function Calender() {
     </Page>
   );
 }
-export default Calender
+export default Calender;
