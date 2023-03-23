@@ -1,4 +1,4 @@
 const Logout = () => {
-  return <div>you need to logout first</div>;
+  return <div style={{ backgroundColor: '#B9D9EB' }}>you need to logout first</div>;
 };
 export default Logout;

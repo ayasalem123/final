@@ -45,10 +45,12 @@ function Treatment() {
       ) : (
         <Navbaradmin setval={setValue} />
       )}
-      { loggeduser?.signeduser?.Role === 'admin' && (
+      {loggeduser?.signeduser?.Role === 'admin' && (
         <button onClick={handleclick}>add new treatment</button>
       )}
-      {showEditForm ? <EditTreatment el={''} /> : null}
+      {showEditForm ? (
+        <EditTreatment el={''} setShowEditForm={setShowEditForm} />
+      ) : null}
       {filteredArr?.length !== 0 ? (
         filteredArr.map((el) => <Cardcomponent el={el} />)
       ) : (

@@ -32,7 +32,7 @@ export default function Login(props) {
     dispatch(signin({ user, toast, navigate }));
   };
   return (
-    <div>
+    <div style={{ backgroundColor: '#B9D9EB' }}>
       {
         <Container component="main" maxWidth="xs">
           <CssBaseline />

@@ -35,7 +35,7 @@ export default function Register(props) {
   };
   const [img, setImg] = React.useState();
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} style={{ backgroundColor: '#B9D9EB' }}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

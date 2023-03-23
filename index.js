@@ -4,7 +4,7 @@ const appointment = require('./models/appointment');
 express = require('express');
 mongoose = require('mongoose');
 bodyParser = require('body-parser');
-
+const path = require('path');
 dotenv = require('dotenv');
 cors = require('cors');
 dotenv.config();
@@ -47,7 +47,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(userroutes);
 mongoose.set('strictQuery', false);
 mongoose
   .connect(process.env.DATAURL, {
@@ -56,5 +55,15 @@ mongoose
   })
   .then(() => console.log('Connected!'))
   .catch((error) => console.log(error.message));
+app.use(userroutes);
 
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 app.listen(process.env.PORT);

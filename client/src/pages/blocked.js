@@ -1,7 +1,7 @@
 import React from 'react';
 function Blocked() {
   return (
-    <div>
+    <div style={{ backgroundColor: '#B9D9EB' }}>
        you have been blocked by admin
     </div>
   );

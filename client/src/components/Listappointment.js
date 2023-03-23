@@ -10,6 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import Navbaradmin from './navbaradmin';
 import {
   DeleteAppointment,
   DoneAppointment,
@@ -72,49 +73,54 @@ export default function Listappointments() {
   let i = 0;
   let array = dates?.map((el) => i++);
   return (
-    dates && (
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {array.map((value) => {
-          const labelId = `checkbox-list-label-${value}`;
-          return (
-            <div>
-              <ListItem
-                key={value}
-                secondaryAction={
-                  <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      handleclick2(value);
-                    }}
+    <div>
+      <Navbaradmin />
+      {dates && (
+        <center>
+          <List sx={{ width: '100%', maxWidth: 360, bgcolor: '#002D62' }}>
+            {array.map((value) => {
+              const labelId = `checkbox-list-label-${value}`;
+              return (
+                <div>
+                  <ListItem
+                    key={value}
+                    secondaryAction={
+                      <IconButton
+                        edge="end"
+                        aria-label="delete"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          handleclick2(value);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    }
+                    disablePadding
                   >
-                    <DeleteIcon />
-                  </IconButton>
-                }
-                disablePadding
-              >
-                <ListItemButton
-                  role={undefined}
-                  onClick={handleToggle(value)}
-                  dense
-                >
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={checked.indexOf(value) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      inputProps={{ 'aria-labelledby': labelId }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText id={labelId} primary={dates[value].date} />
-                </ListItemButton>
-              </ListItem>
-            </div>
-          );
-        })}
-      </List>
-    )
+                    <ListItemButton
+                      role={undefined}
+                      onClick={handleToggle(value)}
+                      dense
+                    >
+                      <ListItemIcon>
+                        <Checkbox
+                          edge="start"
+                          checked={checked.indexOf(value) !== -1}
+                          tabIndex={-1}
+                          disableRipple
+                          inputProps={{ 'aria-labelledby': labelId }}
+                        />
+                      </ListItemIcon>
+                      <ListItemText id={labelId} primary={dates[value].date} />
+                    </ListItemButton>
+                  </ListItem>
+                </div>
+              );
+            })}
+          </List>
+        </center>
+      )}
+    </div>
   );
 }

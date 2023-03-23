@@ -6,6 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Buffer } from 'buffer';
+import Model from './modal';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import EditTreatment from './input';
@@ -44,12 +45,15 @@ export default function Cardcomponent({ el }) {
     setShowEditForm(true);
   };
   const { loggeduser } = useSelector((state) => state.userAuth);
+  //{showEditForm ? <EditTreatment el={el} <Model/>/> : null}
   return (
     <center>
-      {showEditForm ? <EditTreatment el={el} /> : null}
+      {showEditForm ? (
+        <Model el={el} setShowEditForm={setShowEditForm} />
+      ) : null}
 
-      <Card sx={{ maxWidth: 800 }}>
-        <div style={{ display: 'flex' }}>
+      <Card sx={{ maxWidth: 800, padding: '16px', margin: '16px auto', backgroundColor: '#72A0C1' }}>
+        <div style={{ display: 'flex', margin: '16px 0' }}>
           {el.DesktopImg !== 'undefined' && (
             <img src={el.DesktopImg} sx={{ width: 100 }} />
           )}
@@ -59,7 +63,7 @@ export default function Cardcomponent({ el }) {
           )}
         </div>
 
-        <CardContent style={{ backgroundColor: 'grey' }}>
+        <CardContent style={{ backgroundColor: '#6699CC' }}>
           <Typography gutterBottom variant="h5" component="div">
             {el.title}
           </Typography>
@@ -70,17 +74,17 @@ export default function Cardcomponent({ el }) {
         <CardActions>
           {loggeduser?.signeduser?.Role === 'admin' ? (
             <div>
-              <Button onClick={handleEditClick} size="small">
+              <Button onClick={handleEditClick} size="small" style={{ backgroundColor: 'white' }}>
                 edit
               </Button>
-              <Button onClick={handleEditClick2} size="small">
+              <Button onClick={handleEditClick2} size="small" style={{ backgroundColor: 'white' }}>
                 Delete
               </Button>
             </div>
           ) : (
             <div>
-              <Button size="small">Share</Button>
-              <Button size="small">Learn More</Button>
+              <Button size="small" style={{ backgroundColor: 'white' }}>Share</Button>
+              <Button size="small" style={{ backgroundColor: 'white' }}>Learn More</Button>
             </div>
           )}
         </CardActions>

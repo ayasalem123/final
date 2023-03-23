@@ -3,9 +3,10 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import React, { useState } from 'react';
 import FileBase from 'react-file-base64';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 import { changetreatment, addtreatment } from '../redux/slices/AdminReducer';
 import { useDispatch } from 'react-redux';
-function EditTreatment({ el }) {
+function EditTreatment({ el, setShowEditForm }) {
   const [newel, setNewel] = useState(el);
   const dispatch = useDispatch();
   const handleChange = (event) => {
@@ -75,14 +76,19 @@ function EditTreatment({ el }) {
         }}
       />
 
-      <button
+      <Button
+        variant="primary"
         onClick={(event) => {
           event.preventDefault();
           handleclick(newel);
         }}
       >
         submit
-      </button>
+      </Button>
+
+      <Button variant="secondary" onClick={() => setShowEditForm(false)}>
+        Close
+      </Button>
     </>
   );
 }
