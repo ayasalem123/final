@@ -58,12 +58,9 @@ export const logout = createAsyncThunk(
 
 export const getUser = createAsyncThunk(
   'user/getUser',
-  async ({id}, { rejectWithValue, getState, dispatch }) => {
+  async ({ id }, { rejectWithValue, getState, dispatch }) => {
     try {
-      const { data } = await axios.post(
-        'http://localhost:5000/user',
-        {id}
-      );
+      const { data } = await axios.post('http://localhost:5000/user', { id });
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -117,6 +114,36 @@ export const getReviews = createAsyncThunk(
   async (payload, { rejectWithValue, getState }) => {
     try {
       const { data } = await axios.get('http://localhost:5000/reviews');
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+export const sendotp = createAsyncThunk(
+  'user/sendotp',
+  async ({ recipient_email, OTP }, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await axios.post(
+        'http://localhost:5000/send_recovery_email',
+        { recipient_email, OTP }
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+export const updatepassword = createAsyncThunk(
+  'user/updatepassword',
+  async ({ email, password }, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await axios.post(
+        'http://localhost:5000/changepassword',
+        { email, password }
+      );
       console.log(data);
       return data;
     } catch (error) {
@@ -221,21 +248,20 @@ export const userSlice = createSlice({
       state.appErr = action?.payload?.message;
       state.serverErr = action?.error?.message;
     },
-    [ getReviews.pending]: (state, action) => {
+    [getReviews.pending]: (state, action) => {
       state.loading = true;
     },
-    [ getReviews.fulfilled]: (state, action) => {
+    [getReviews.fulfilled]: (state, action) => {
       state.loading = false;
       state.reviews = action.payload;
       state.appErr = undefined;
       state.serverErr = undefined;
     },
-    [ getReviews.rejected]: (state, action) => {
+    [getReviews.rejected]: (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.message;
       state.serverErr = action?.error?.message;
     },
-   
   },
 });
 export default userSlice.reducer;

@@ -8,7 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -18,10 +18,10 @@ import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { signin } from '../redux/slices/UserReducer';
 
-export default function Login(props) {
+export default function Login({ setRecipient_email, setOTP }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -29,10 +29,21 @@ export default function Login(props) {
       email: data.get('email'),
       password: data.get('password'),
     };
-    dispatch(signin({ user, toast, navigate }));
+    const res = await dispatch(signin({ user, toast, navigate }));
+    toast.error(`${res?.payload}`);
+    console.log(res.payload);
+  };
+  const handlechange = (event) => {
+    setRecipient_email(event.target.value);
+  };
+  const handleforget = () => {
+    const OTP = Math.floor(Math.random() * 900 + 100);
+    setOTP(OTP);
+    navigate('/otp');
   };
   return (
-    <div style={{ backgroundColor: '#B9D9EB' }}>
+    <div>
+      <ToastContainer />
       {
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -63,6 +74,7 @@ export default function Login(props) {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={handlechange}
               />
               <TextField
                 margin="normal"
@@ -85,9 +97,9 @@ export default function Login(props) {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <button onClick={handleforget} variant="body2">
                     Forgot password?
-                  </Link>
+                  </button>
                 </Grid>
                 <Grid item>
                   <Link to="/register" variant="body2">

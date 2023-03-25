@@ -17,6 +17,8 @@ import Blocked from './pages/blocked';
 import Reviews from './pages/reviews';
 import Logout from './pages/logout';
 import Requirenotlogged from './components/requirenotlogged';
+import Otp from './pages/otp';
+import Recover from './pages/recover';
 function App() {
   const [treatmentelement, setTreatmentelement] = useState([]);
   let gettreatment = async () => {
@@ -26,6 +28,8 @@ function App() {
   useEffect(() => {
     gettreatment();
   }, []);
+  const [recipient_email, setRecipient_email] = useState('');
+  const [OTP, setOTP] = useState();
 
   return (
     <div className="App">
@@ -40,7 +44,23 @@ function App() {
             <Route path="/treatments" element={<Treatment />} />
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/book" element={<Calender />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/otp"
+              element={<Otp recipient_email={recipient_email} OTP={OTP} />}
+            />
+            <Route
+              path="/recover"
+              element={<Recover recipient_email={recipient_email} />}
+            />
+            <Route
+              path="/login"
+              element={
+                <Login
+                  setRecipient_email={setRecipient_email}
+                  setOTP={setOTP}
+                />
+              }
+            />
             <Route path="/users" element={<Home />} />
             <Route path="/logout" element={<Logout />} />
           </Route>

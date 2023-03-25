@@ -11,12 +11,12 @@ export default function Users() {
   };
   const { Allusers } = useSelector((state) => state.admin);
   return (
-    <div>
+    <center>
       <Navbaradmin />
       {Allusers?.map((el) => {
         return (
-          <center style={{ backgroundColor: '#002D62' }}>
-            <div>{el.email}</div>
+          <center style={{ backgroundColor: '#005A9C', width: '50%' }}>
+            <div style={{ fontSize: '25px' }}>{el.email}</div>
             <button
               onClick={(event) => {
                 event.preventDefault();
@@ -36,6 +36,6 @@ export default function Users() {
           </center>
         );
       })}
-    </div>
+    </center>
   );
 }

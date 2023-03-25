@@ -165,36 +165,7 @@ export default function Navbaradmin({ setval }) {
                 </MenuItem>
               ))}
             </Menu>
-            <Box
-              sx={{
-                display: 'flex',
-                width: '5%',
-                justifyContent: 'center',
-                bgcolor: '#1976d2',
-                color: 'text.primary',
-                borderRadius: 1,
-                p: 1,
-              }}
-            >
-              <IconButton
-                sx={{ ml: 1 }}
-                onClick={() => {
-                  chosentheme === darkTheme
-                    ? setChosennumber(0)
-                    : setChosennumber(1);
-                }}
-                color="inherit"
-              >
-                {chosentheme === darkTheme ? (
-                  <Brightness7Icon />
-                ) : (
-                  <Brightness4Icon />
-                )}
-              </IconButton>
-            </Box>
-            <ThemeProvider theme={chosentheme}>
-              <CssBaseline />
-            </ThemeProvider>
+            
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
@@ -268,6 +239,36 @@ export default function Navbaradmin({ setval }) {
                 }
               }
             })}
+            <Box
+              sx={{
+                display: 'flex',
+                width: '5%',
+                justifyContent: 'center',
+                bgcolor: '#1976d2',
+                color: 'text.primary',
+                borderRadius: 1,
+                p: 1,
+              }}
+            >
+              <IconButton
+                sx={{ ml: 1 }}
+                onClick={() => {
+                  chosentheme === darkTheme
+                    ? setChosennumber(0)
+                    : setChosennumber(1);
+                }}
+                color="inherit"
+              >
+                {chosentheme === darkTheme ? (
+                  <Brightness7Icon />
+                ) : (
+                  <Brightness4Icon />
+                )}
+              </IconButton>
+            </Box>
+            <ThemeProvider theme={chosentheme}>
+              <CssBaseline />
+            </ThemeProvider>
           </Box>
           <Search>
             <SearchIconWrapper>

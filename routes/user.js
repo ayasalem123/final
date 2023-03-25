@@ -9,11 +9,13 @@ const {
   getCarousel,
   gettreatment,
   register,
+  changepassword,
   signin,
   postreview,
   getappoitments,
   getreviews,
   addappoitment,
+  getRecoveryEmail,
 } = require('../controllers/UserController');
 const {
   delettreatment,
@@ -30,6 +32,8 @@ const {
   notdoneappoitment,
 } = require('../controllers/AdminController');
 const router = express.Router();
+router.post('/changepassword', DataValidation, changepassword);
+router.post('/send_recovery_email', getRecoveryEmail);
 router.get('/carousel', getCarousel);
 router.get('/treatment', gettreatment);
 router.get('/book', getdates);

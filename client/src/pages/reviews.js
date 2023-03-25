@@ -9,6 +9,8 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { useSelector } from 'react-redux';
+import Navbarsigned from '../components/navbarsigned';
+import Navbaradmin from '../components/navbaradmin';
 const Reviews = () => {
   const dispatch = useDispatch();
   const [formValue, setFormValue] = useState({});
@@ -18,6 +20,7 @@ const Reviews = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createReview({ formValue }));
+    window.location.reload();
   };
   useEffect(() => {
     dispatch(getReviews());

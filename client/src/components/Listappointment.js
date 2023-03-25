@@ -77,7 +77,7 @@ export default function Listappointments() {
       <Navbaradmin />
       {dates && (
         <center>
-          <List sx={{ width: '100%', maxWidth: 360, bgcolor: '#002D62' }}>
+          <List sx={{ width: '100%', maxWidth: 360, bgcolor: '#005A9C' }}>
             {array.map((value) => {
               const labelId = `checkbox-list-label-${value}`;
               return (

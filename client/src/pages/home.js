@@ -41,7 +41,7 @@ function Home() {
     setfilteredArr(NewfilteredArr);
   }, [value]);
   return (
-    <div style={{ backgroundColor: '#B9D9EB' }}>
+    <div>
       <ToastContainer />
       {!userAuth?.loggeduser?.signeduser ? (
         <Navbarvisitor setval={setValue} />
